@@ -1,0 +1,22 @@
+"use strict";
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(self["webpackChunkshopping_cart"] = self["webpackChunkshopping_cart"] || []).push([["utilities"],{
+
+/***/ "./src/js/utilities.js":
+/*!*****************************!*\
+  !*** ./src/js/utilities.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"showCart\": () => (/* binding */ showCart),\n/* harmony export */   \"hideCart\": () => (/* binding */ hideCart),\n/* harmony export */   \"showCartItems\": () => (/* binding */ showCartItems),\n/* harmony export */   \"checkLs\": () => (/* binding */ checkLs),\n/* harmony export */   \"NumberOfItems\": () => (/* binding */ NumberOfItems),\n/* harmony export */   \"totalPrice\": () => (/* binding */ totalPrice)\n/* harmony export */ });\n// import modules:\nconst getProductsFromLsFunc = () => \n    __webpack_require__.e(/*! import() | storage */ \"storage\").then(__webpack_require__.bind(__webpack_require__, /*! ./storage.js */ \"./src/js/storage.js\"));\nconst createCartItemFunc = () => \n    __webpack_require__.e(/*! import() | cart_structure */ \"cart_structure\").then(__webpack_require__.bind(__webpack_require__, /*! ./cart.js */ \"./src/js/cart.js\"));\nconst addProductsToLsFunc = () => \n    __webpack_require__.e(/*! import() | storage */ \"storage\").then(__webpack_require__.bind(__webpack_require__, /*! ./storage.js */ \"./src/js/storage.js\"));\n\nconst cart_items = document.getElementById('cart_items');\nconst overlayEl = document.getElementById('cart_overlay');\nconst cartEl = document.getElementById('cart');\n\nfunction showCart(overlayEl, cartEl) {\n    overlayEl.classList.add('show');\n    window.setTimeout(_ => cartEl.classList.add('show'), 0);\n}\n\nfunction hideCart(overlayEl, cartEl) {\n    cartEl.classList.remove('show')\n    window.setTimeout(_ => overlayEl.classList.remove('show'), 300);\n}\n\nfunction showCartItems() {\n    // clear container:\n    cart_items.innerHTML = '';\n    getProductsFromLsFunc().then(({getProductsFromLs}) => {\n        console.log(getProductsFromLs());\n        getProductsFromLs().forEach((product, index) => {\n            createCartItemFunc().then(({createCartItem}) => {\n                createCartItem(product, index);\n            });\n        });\n    }); \n}\n\nfunction checkLs(productData) {\n    getProductsFromLsFunc().then(({getProductsFromLs}) => {\n        const lsProducts = getProductsFromLs();\n        if (lsProducts.some(product => product.id === productData.id)) {\n        } else {\n            addProductsToLsFunc().then(({addProductsToLs}) => {\n                addProductsToLs(productData);\n            });\n            showCartItems();\n            showCart(overlayEl, cartEl);\n        }\n    });\n}\n\nfunction NumberOfItems(navbarCartTemp) {\n    let count = 0;\n    getProductsFromLsFunc().then(({getProductsFromLs}) => {\n        let lsProducts = getProductsFromLs();\n        if (lsProducts.length > 0) {\n            lsProducts.forEach(product => {\n                count += product.item_count;\n                navbarCartTemp.innerHTML = `Cart( ${count} )`\n            });\n            count = 0;\n        } else {\n            navbarCartTemp.innerHTML = `Cart( ${0} )`;\n        }\n    });\n}\n\nfunction totalPrice(total_price_el) {\n    let price = 0;\n    getProductsFromLsFunc().then(({getProductsFromLs}) => {\n        let lsProducts = getProductsFromLs();\n        if (lsProducts.length > 0) {\n            lsProducts.forEach(product => {\n                price += product.price * product.item_count;\n                total_price_el.innerHTML = `$${price.toFixed(2)}`;\n            });\n            price = 0;\n        } else {\n            total_price_el.innerHTML = `$00.00`;\n        }\n    });\n}\n\n//# sourceURL=webpack://shopping_cart/./src/js/utilities.js?");
+
+/***/ })
+
+}]);
